@@ -11,12 +11,8 @@ a word from the context window of nearby words [1]. Iterestingly,
 optimizing Word2Vec's prediction task is equivalent to factoring
 a specific construction of the word co-occurrence matrix [2].
 Accordingly, Word2Vec is just one of a handful of algorithms for
-learning so-called "word embeddings", including Stanford's GloVe and Facebook's
-FastText, as well as older players such as Latent Semantic Indexing
-and TextRank.
-
-I'll start with Word2Vec simply because I know it best. As free-time permits,
-I'll play with FastText and post the code.
+learning so-called "word embeddings" into vector spaces, including
+Stanford's GloVe and Facebook's FastText.
 
 # Data sets
 
@@ -56,7 +52,7 @@ TODO ...
 
 Like all (data-)scientists, I stand on the shoulders of giants. The inspiration
 for this project was largely a talk Chris Moody gave at *Text by the Bay* in 2015.
-And the excellent, open-source implementation of the algorithm was written and
+And an excellent, open-source implementation of Word2Vec was written and is
 maintained by Radim Řehůřek.
 
 # References

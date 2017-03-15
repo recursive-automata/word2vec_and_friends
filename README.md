@@ -7,18 +7,16 @@ As you're probably aware, unsupervised algorithms for learning vector
 representations of words are interesting and useful.
 The maybe-still-most-popular is Google's Word2Vec, which works by training a 
 shallow neural network on the task of predicting the presence of
-words from the "context windows" of nearby words [1]. Iterestingly, 
+a word from the context window of nearby words [1]. Iterestingly, 
 optimizing Word2Vec's prediction task is equivalent to factoring
-a specific construction of the word co-occurrence matrix,  
-and Word2Vec's improved performance over older, more traditional
-methods in NLP has mostly to do with hyperparameter selection [2].
+a specific construction of the word co-occurrence matrix [2].
 Accordingly, Word2Vec is just one of a handful of algorithms for
-learning "word embeddings", including Stanford's GloVe and Facebook's
+learning so-called "word embeddings", including Stanford's GloVe and Facebook's
 FastText, as well as older players such as Latent Semantic Indexing
 and TextRank.
 
 I'll start with Word2Vec simply because I know it best. As free-time permits,
-I'll probably start playing with FastText and post the code.
+I'll play with FastText and post the code.
 
 # Data sets
 

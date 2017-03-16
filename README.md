@@ -1,5 +1,5 @@
 A place to put my explorations of and ruminations about vector embedding
-methods, starting with Doc2Vec.
+and dimensionality reduction, starting with Doc2Vec and t-SNE.
 
 # Introduction
 

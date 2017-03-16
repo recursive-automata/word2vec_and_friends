@@ -59,27 +59,23 @@ facebook users. There are 88K friendships, or for a mean of about 20 friendships
 easy: let's read the file, build the network graph, and store it in memory.
 
 Word2Vec expects "sentences", so what do those look like in our problem? Try random walks of the social
-graph. After minimal experimentation, the lengths of these random walks was set to 25.
-The size of the "context window" has a clear interpretation here: it places an upper bound on how
+graph, with user as "words". After minimal experimentation, the lengths of these random walks was set to
+25. The size of the "context window" has a clear interpretation here: it places an upper bound on how
 many degrees of seperation we're using to define a user's social context.
+
+There's another cool trick we can use: use Doc2Vec to learn both a word and a document vector for each user.
+The words are the users along the randon walk, and the document tag is the user the walk started from.
+The word vectors will be sensitive only to friendships within users' social contexts, but the document
+vectors will be sensitive to all friendships along a random walk. As we'll see, this long-range sensitivity
+leads to good coarse-grained cluster detection, at the expense of obscuring some of the details of the network.
 
 4.3K is a much smaller vocabulary than Word2Vec usually sees. To compensate, use small
 dimensionality for the embedding vector spaces, and concatenate two different embeddings:
 those with degrees of speration < 3 and < 7 in users' social contexts.
 
-There's another cool trick we can use: append each random walk with a document tag denoting which
-user started the random walk, and use Doc2Vec to learn both a word and a document vector for each user.
-While the word vectors will be sensitive only to friendships within users' social contexts, document
-vectors will be sensitive to any friendships along the random walks. As we'll see, the long-range sensitivity
-of the document vectors will lead to good coarse-grained cluster detection, at the expense of obsuring some 
-of the details of the network.
-
-Once training's done, apply PCA and t-SNE to get a 2D representation of the for use in plotting. 
-Cluster on the user vectors, hierarchically and with k-means.
-
 ### Discussion
 
-I think this example is fascinating for a few reasons. First, it's a dataset with < 100K rows and ~4.3K
+I think this example is important for a few reasons. First, it's a dataset with < 100K rows and ~4.3K
 distinct tokens. Although generating random walks through the network is a cool sampling trick, the
 training data is still less than a million examples -- the big data regime, this is not. But the structure
 of the problem is a good match for what Word2Vec does (again: factoring a symmetric measure of co-occurance),

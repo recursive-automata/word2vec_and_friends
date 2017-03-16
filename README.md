@@ -42,11 +42,7 @@ the prediction task [3]. One (very mathematical) way to think about this: a
 document's vector defines a bias over the word vectors that increases the
 probability of predicting that document's words given their context windows.
 We're also free to stack such biases additively, by attaching multiple
-(and non-document-specific) tags to a document. Furthermore, we get the nice 
-property that words and tags that tend to co-occur will end up with proximal
-vectors. Very interesting....
-
-Applications abound -- why not a Stackoverflow search engine?
+(and non-document-specific) tags to a document.
 
 ### Munge
 

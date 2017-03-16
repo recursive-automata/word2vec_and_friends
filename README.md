@@ -82,8 +82,8 @@ Cluster on the user vectors, hierarchically and with k-means.
 I think this example is fascinating for a few reasons. First, it's a dataset with < 100K rows and ~4.3K
 distinct tokens. Although generating random walks through the network is a cool sampling trick, the
 training data is still less than a million examples -- the big data regime, this is not. But the structure
-of the problem is a good match for what Word2Vec does (again: matrix factorization), and I was able to get
-a good result quickly.
+of the problem is a good match for what Word2Vec does (again: factoring a symmetric measure of co-occurance),
+and I was able to get a good result quickly.
 
 Second, it illustrates how Doc2Vec trains word vectors and document vectors. Recall that word vectors only
 get trained on context windows that contain that word, whereas document vectors get trained on every context

@@ -94,11 +94,11 @@ largely irrespective of whether they have any mutual friends. In contrast, the w
 closer if they have more friends in common.
 
 And third, it's a great opportunity to make some eye candy. The information in these embedded vectors can be rendered
-visually with t-SNE diagrams, on which users' friendships can also be shown. The first diagram was made mostly from
-the document vectors, with some contribution from the short-range word vectors to provide cleaner seperation between
+visually with t-SNE diagrams [4], on which the network's social graph is plotted. The first diagram was made mostly from
+the document vectors, with small contribution from the short-range word vectors to provide cleaner seperation between
 the clusters. Six large clusters clearly turn up, and hierarchical clustering captures them very well. The second
-t-SNE diagram takes the concatenated word vectors and vectors as input, and the result captures much more of the 
-structure of individual clusters without getting too noisy.
+t-SNE diagram takes the concatenated long- and short-range word and document vectors as input, and the result
+captures much more of the structure of individual clusters while retaining distinction and not getting too noisy.
 
 ## Stackoverflow posts
 
@@ -133,6 +133,9 @@ Efficient Estimation of Word Representations in Vector Space.
 Neural Word Embedding as Implicit Matrix Factorization. 2014
 
 [3] QV Le and T Mikolov. Distributed Representations of Sentences and Documents. 2014
+
+[4] L.J.P. van der Maaten, G.E. Hinton. Visualizing High-Dimensional Data Using
+t-SNE. 2008
 
 # License
 

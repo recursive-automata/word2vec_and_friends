@@ -119,9 +119,9 @@ Applications to follow....
 
 Like all (data-)scientists, I stand on the shoulders of giants. The inspiration
 for this project began awhile ago when I watched a 2015 talk Chris Moody gave at
-*Text by the Bay*, and the flame's been fanned since by the blogs, talks, and github
-repos of many who've worked with word embeddings. And thanks to Radim Řehůřek for an 
-excellent, open-source implementation of Word2Vec.
+*Text by the Bay* [5], and the flame's been fanned by all the subsequent progress
+in the field. Thanks to Radim Řehůřek et al for an excellent, open-source
+implementation of Doc2Vec [6].
 
 # References
 
@@ -136,6 +136,10 @@ Neural Word Embedding as Implicit Matrix Factorization. 2014
 
 [4] L.J.P. van der Maaten, G.E. Hinton. Visualizing High-Dimensional Data Using
 t-SNE. 2008
+
+[5] Chris Moody. "A Word is Worth a Thousand Vectors". 2015. https://youtu.be/vkfXBGnDplQ
+
+[6] RaRe Technologies, Gensim. https://github.com/RaRe-Technologies/gensim
 
 # License
 

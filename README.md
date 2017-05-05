@@ -22,102 +22,13 @@ Jure Leskovec and Andrej Krevl, http://snap.stanford.edu/data, June 2014
 Stack Exchange Data Dump, Stack Exchange, Inc.,
 https://archive.org/details/stackexchange, December 2016
 
-# Investigations
-
-## Facebook friendships
-
-### Overview
-
-Word2Vec simply treats an individual word as a unique token, which means there's nothing
-stopping us from applying the algorithm to non-NLP problems. The underlying task is to predict
-occurence of a token given its context, so any problem domain in which the context
-can be encoded in a sequence of tokens is a candidate for throwing Word2Vec at.
-
-Word2Vec can learn meaningful vector representations of words essentially
-because analogous words tend to occur in analogous contexts. Words that occur
-in the same contexts tend to have proximal representative vectors, and differences 
-between vectors can carry semantic meaning. These embedded vectors are well suited
-for machine learning tasks such as clustering, classification, or similarity 
-detection.
-
-A modication to Word2Vec, dubbed Doc2Vec, learns vector representations of 
-whole documents, simply by appending a document-specific tag to the context windows of
-the prediction task [3]. One (very mathematical) way to think about this: a
-document's vector defines a bias over the word vectors that increases the
-probability of predicting that document's words given their context windows.
-We're also free to stack such biases additively, by attaching multiple
-(and non-document-specific) tags to a document.
-
-Let's see if Word2Vec can identify major clusters in a social network. We have good reason to be
-optimistic: both the problem and the algorithm can be recast in terms of factoring a co-occurance matrix.
-Let's also see if we can display the network in an easy-for-human-comprehension kind of way.
-
-### Munge
-
-One of SNAP's datasets includes a small text file containing the friendships between 4.3K anonymized 
-facebook users. There are 88K friendships, or for a mean of about 20 friendships per user. This one's
-easy: let's read the file, build the network graph, and store it in memory.
-
-Word2Vec expects "sentences", so what do those look like in our problem? Try random walks of the social
-graph, with user as "words". After minimal experimentation, the lengths of these random walks was set to
-25. The size of the "context window" has a clear interpretation here: it places an upper bound on how
-many degrees of seperation we're using to define a user's social context.
-
-There's another cool trick we can use: use Doc2Vec to learn both a word and a document vector for each user.
-The words are the users along the randon walk, and the document tag is the user the walk started from.
-The word vectors will be sensitive only to friendships within users' social contexts, but the document
-vectors will be sensitive to all friendships along a random walk. As we'll see, this long-range sensitivity
-leads to good coarse-grained cluster detection, at the expense of obscuring some of the details of the network.
-
-4.3K is a much smaller vocabulary than Word2Vec usually sees. To compensate, use small
-dimensionality for the embedding vector spaces, and concatenate two different embeddings:
-those with degrees of speration < 3 and < 7 in users' social contexts.
-
-### Discussion
-
-I think this example is important for a few reasons. First, it's a dataset with < 100K rows and ~4.3K
-distinct tokens. Although generating random walks through the network is a cool sampling trick, the
-training data is still less than a million examples -- the big data regime, this is not. But the structure
-of the problem is a good match for what Word2Vec does (again: factoring a symmetric measure of co-occurance),
-and I was able to get a good result quickly.
-
-Second, it illustrates how Doc2Vec trains word vectors and document vectors. Recall that word vectors only
-get trained on context windows that contain that word, whereas document vectors get trained on every context
-window in every document with a matching tag. Here, the document tags are who the random walks started at, which
-means that the document vectors encode more information about who knows who *outside of* a user's immediate
-friend group than the word vectors do. Two users will have proximal document vectors if they "run in similar crowds",
-largely irrespective of whether they have any mutual friends. In contrast, the word vectors for two users will be
-closer if they have more friends in common.
-
-And third, it's a great opportunity to make some eye candy. The information in these embedded vectors can be rendered
-visually with t-SNE diagrams [4], on which the network's social graph is plotted. The first diagram was made mostly from
-the document vectors, with small contribution from the short-range word vectors to provide cleaner seperation between
-the clusters. Six large clusters clearly turn up, and hierarchical clustering captures them very well. The second
-t-SNE diagram takes the concatenated long- and short-range word and document vectors as input, and the result
-captures much more of the structure of individual clusters while retaining distinction and not getting too noisy.
-
-## Stackoverflow posts
-
-### Munge
-
-Stack Exchange, Inc. is very generous and does data dumps of the stackoverflows'
-site posts (find the link below). There's a good spectrum of dataset sizes from
-their distinct subdomains, and if you're fearless, you can do the whole shabang,
-probably more than a TB uncompressed.
-
-I settled on a few 10s of GB, but that's a bit much to sit comfortably in my box's
-memory (maybe yours, too), so I setup a streaming xml parser to do the preproccessing
-and write the results to a few tsv's.
-
-Applications to follow....
-
 # Acknowledgements
 
 Like all (data-)scientists, I stand on the shoulders of giants. The inspiration
 for this project began awhile ago when I watched a 2015 talk Chris Moody gave at
-*Text by the Bay* [5], and the flame's been fanned by all the subsequent progress
+*Text by the Bay* [3], and the flame's been fanned by all the subsequent progress
 in the field. Thanks to Radim Řehůřek et al for an excellent, open-source
-implementation of Doc2Vec [6].
+implementation of Doc2Vec [4].
 
 # References
 
@@ -128,14 +39,9 @@ Efficient Estimation of Word Representations in Vector Space.
 [2] Omer Levy, Yoav Goldberg.
 Neural Word Embedding as Implicit Matrix Factorization. 2014
 
-[3] QV Le and T Mikolov. Distributed Representations of Sentences and Documents. 2014
+[3] Chris Moody. "A Word is Worth a Thousand Vectors". 2015. https://youtu.be/vkfXBGnDplQ
 
-[4] L.J.P. van der Maaten, G.E. Hinton. Visualizing High-Dimensional Data Using
-t-SNE. 2008
-
-[5] Chris Moody. "A Word is Worth a Thousand Vectors". 2015. https://youtu.be/vkfXBGnDplQ
-
-[6] RaRe Technologies, Gensim. https://github.com/RaRe-Technologies/gensim
+[4] RaRe Technologies, Gensim. https://github.com/RaRe-Technologies/gensim
 
 # License
 
